@@ -5,7 +5,7 @@ from aiogram.types import FSInputFile
 import asyncio
 
 API_TOKEN = "8018745950:AAHLjt6FCovlKj8WLb1nYF57zVlOB6NkA4g"   # Telegram bot token
-ACCESS_TOKEN = "EAAXsb7JPQ1cBPE7tiJWtyJc1Bi18yWuygRYkx6HQtJB3ZChJu3xd7ekZCZBIcQ2mWEJxarXnJTE5QHLZAhZB7RKdi4788nFKQz8Ccvl9I2ovlK6oL1OFsesLIMxZAcEMux59qCL3ZBqV0vitieVVOU8WHk3295lyh2ZBZCkM05cMikogNXQ9Rp6gcnSe8yiL91XH0my1jfx1oDjCsvH8hyeQrnkasDcBUk837NcBWXsovFNqqKSJAGaQn6AFy3xOdxwZDZD"  # Graph API uchun
+ACCESS_TOKEN = "EAAXsb7JPQ1cBPAxQDYrddoZCZAcnsUEN7ZBM8XqAQzGzRQef05hck7HkE5JQQ40hZCTwp5jLfhIW6oacBSjnW1MjbuDC6lo5F7mryiSIiZBConvZCsndZBqCUh3qT9EwqYrbZCmRoNRShxaDM6ZCsTsoivDklxLy6KR6uaau6RMIVdGLi3hhWBQpHwMDlTkPzF0HlGxPGRxq6y8cWhbbZCnMxNe7fXFQ5j61ZBGfS3XzwKZAAH3Ta10o4LZB1sGGOM5ZAcrQZDZD"  # Graph API uchun
 BUSINESS_ID = "1988579362071935"  # Instagram business ID
 
 bot = Bot(token=API_TOKEN)
@@ -73,6 +73,7 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
 
