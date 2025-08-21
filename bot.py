@@ -4,9 +4,9 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.types import FSInputFile
 import asyncio
 
-API_TOKEN = "SENING_BOT_TOKENING"   # Telegram bot token
-ACCESS_TOKEN = "SENING_FACEBOOK_LONG_LIVED_ACCESS_TOKENING"  # Graph API uchun
-BUSINESS_ID = "656699249452364"  # Instagram business ID
+API_TOKEN = "8018745950:AAHLjt6FCovlKj8WLb1nYF57zVlOB6NkA4g"   # Telegram bot token
+ACCESS_TOKEN = "EAAXsb7JPQ1cBPMAZAOec7IzVvgtZAk3A4ew8J4PN4h64dKJkxk1djmZCZAJaCPlYPwZA5ZA9rHRi4coC16HFjR5JmgsDdc2PhUe0UpcVdfBa5NfmHGZCC9kFqAfxoZBvrN6OPsfuZCsmq9nP9hkrMvLpquZBrZABGa6YxG8DZCz7UZAwNKZAPY9EVc3G8WRPLMcTcVTxZALbLfC0MgZAdOaMwA2Vatt2VDQpBcA0AULKnmtHiAYJByCs7O9FhUKg7p4M973JNwZDZD"  # Graph API uchun
+BUSINESS_ID = "1988579362071935"  # Instagram business ID
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
@@ -73,3 +73,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
