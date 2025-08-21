@@ -1,69 +1,75 @@
-import instaloader
 import os
-import shutil
-from aiogram import Bot, Dispatcher, types
+import requests
+from aiogram import Bot, Dispatcher, types, F
+from aiogram.types import FSInputFile
 import asyncio
 
-API_TOKEN = "8018745950:AAHLjt6FCovlKj8WLb1nYF57zVlOB6NkA4g"  # o'z tokeningizni qo'ying
+API_TOKEN = "SENING_BOT_TOKENING"   # Telegram bot token
+ACCESS_TOKEN = "SENING_FACEBOOK_LONG_LIVED_ACCESS_TOKENING"  # Graph API uchun
+BUSINESS_ID = "656699249452364"  # Instagram business ID
+
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
-L = instaloader.Instaloader()
+def get_instagram_media(url: str):
+    """
+    Instagram Business API orqali rasm/video olish
+    """
+    shortcode = url.split("/")[-2]
 
-DOWNLOADS_DIR = "downloads"
+    # 1. Media ID olish
+    media_info_url = f"https://graph.facebook.com/v18.0/ig_shortcode/{shortcode}?fields=id&access_token={ACCESS_TOKEN}"
+    media_info = requests.get(media_info_url).json()
 
-async def clear_downloads():
-    """downloads papkasini tozalash"""
-    if os.path.exists(DOWNLOADS_DIR):
-        shutil.rmtree(DOWNLOADS_DIR)
+    if "id" not in media_info:
+        return None, "Media ID olinmadi"
 
-async def download_instagram_media(url: str):
-    """Instagramdan video yoki rasm yuklab olish"""
-    shortcode = url.split("/")[-2]  # linkdan post ID olish
-    post = instaloader.Post.from_shortcode(L.context, shortcode)
+    media_id = media_info["id"]
 
-    # avval eski fayllarni tozalaymiz
-    await clear_downloads()
-    os.mkdir(DOWNLOADS_DIR)
+    # 2. Media URL olish
+    media_url = f"https://graph.facebook.com/v18.0/{media_id}?fields=media_type,media_url,caption&access_token={ACCESS_TOKEN}"
+    media_data = requests.get(media_url).json()
 
-    # yangi postni yuklaymiz
-    L.download_post(post, target=DOWNLOADS_DIR)
+    if "media_url" not in media_data:
+        return None, "Media URL olinmadi"
 
-    # yuklangan fayllarni topamiz
-    files = [os.path.join(DOWNLOADS_DIR, f) for f in os.listdir(DOWNLOADS_DIR)]
-    media_files = [f for f in files if f.endswith(".mp4") or f.endswith(".jpg")]
+    return media_data, None
 
-    return media_files
 
-@dp.message()
+@dp.message(F.text)
 async def handle_message(message: types.Message):
     if "instagram.com" in message.text:
-        url = message.text.strip()
-        await message.answer("⏳ Media yuklanmoqda, kuting...")
+        await message.answer("⏳ Instagram media yuklanmoqda...")
 
-        try:
-            files = await download_instagram_media(url)
+        media_data, error = get_instagram_media(message.text.strip())
 
-            if not files:
-                await message.answer("❌ Media topilmadi yoki qo'llab-quvvatlanmaydi.")
-                return
+        if error:
+            await message.answer(f"⚠️ Xatolik: {error}")
+            return
 
-            for file_path in files:
-                if file_path.endswith(".mp4"):
-                    await bot.send_video(chat_id=message.chat.id, video=types.FSInputFile(file_path))
-                elif file_path.endswith(".jpg"):
-                    await bot.send_photo(chat_id=message.chat.id, photo=types.FSInputFile(file_path))
+        media_url = media_data["media_url"]
+        media_type = media_data["media_type"]
 
-            # yuborilgandan keyin tozalash
-            await clear_downloads()
+        # Rasm
+        if media_type == "IMAGE":
+            await message.answer_photo(media_url, caption=media_data.get("caption", ""))
 
-        except Exception as e:
-            await message.answer(f"⚠️ Xatolik: {e}")
+        # Video
+        elif media_type == "VIDEO":
+            await message.answer_video(media_url, caption=media_data.get("caption", ""))
+
+        # Carousel (bir nechta media)
+        elif media_type == "CAROUSEL_ALBUM":
+            await message.answer("📂 Bu postda bir nechta rasm/video bor. Hozircha faqat bitta yuklab olinadi.")
+            await message.answer_photo(media_url)
+
     else:
         await message.answer("Instagram linkini yuboring 🔗")
 
+
 async def main():
     await dp.start_polling(bot)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
