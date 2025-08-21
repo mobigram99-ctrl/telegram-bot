@@ -5,8 +5,8 @@ from aiogram.types import FSInputFile
 import asyncio
 
 API_TOKEN = "8018745950:AAHLjt6FCovlKj8WLb1nYF57zVlOB6NkA4g"   # Telegram bot token
-ACCESS_TOKEN = "EAAXsb7JPQ1cBPAxQDYrddoZCZAcnsUEN7ZBM8XqAQzGzRQef05hck7HkE5JQQ40hZCTwp5jLfhIW6oacBSjnW1MjbuDC6lo5F7mryiSIiZBConvZCsndZBqCUh3qT9EwqYrbZCmRoNRShxaDM6ZCsTsoivDklxLy6KR6uaau6RMIVdGLi3hhWBQpHwMDlTkPzF0HlGxPGRxq6y8cWhbbZCnMxNe7fXFQ5j61ZBGfS3XzwKZAAH3Ta10o4LZB1sGGOM5ZAcrQZDZD"  # Graph API uchun
-BUSINESS_ID = "1988579362071935"  # Instagram business ID
+ACCESS_TOKEN = "EAAXsb7JPQ1cBPCrZAzOqksZCbtZCSNZALG1AIRzaFBDysqwf9aXCnqQxmOqw1HgGGkWUDs8ZBEf8ZCZB2Bio1gAoeaQnmZCrGL4icwuwm8MZACnZCZAPjUWqVizz9RQTXZAX1b9PZBp5DYjO4CAqZCN3yCnEwsM9CQJqhLbeZBd38o2F2lVtheNpxf98lwZAUHkqmEddm6MrCL4YmsSYZCEN2NgePGUAEZAe8cdthKiiUBBZCcteA07VEIha8wDiHM9OAceSpYqTwZDZD"  # Graph API uchun
+BUSINESS_ID = "742274465321483"  # Instagram business ID
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
@@ -73,6 +73,7 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
 
